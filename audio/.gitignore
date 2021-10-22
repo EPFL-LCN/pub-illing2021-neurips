@@ -1,0 +1,4 @@
+__pycache__/
+*.tar
+*.rar
+.DS_Store

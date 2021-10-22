@@ -1,10 +1,10 @@
 
-<!-- REPLACE WITH REAL DOI [![DOI](https://zenodo.org/badge/188856619.svg)](https://zenodo.org/badge/latestdoi/188856619) -->
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5593214.svg)](https://doi.org/10.5281/zenodo.5593214)
 
 This is the code for the publication:
 
 B. Illing, J. Ventura, G. Bellec & W. Gerstner
-[*Local plasticity rules can learn deep representations using self-supervised contrastive predictions*](https://arxiv.org/abs/2010.08262), accepted at NeurIPS 2021
+[*Local plasticity rules can learn deep representations using self-supervised contrastive predictions*](https://arxiv.org/abs/2010.08262), accepted at NeurIPS 2021.
 
 Contact:
 [bernd.illing@epfl.ch](mailto:bernd.illing@epfl.ch)
@@ -16,11 +16,6 @@ The code is divided into three independent sections, corresponding to the three 
 * vision
 * video
 * audio
-
-Our implementation requires the following general dependenices:
-
-* python 3
-* conda
 
 Each section comes with its own dependencies handled by conda environments, as explained in the respective sections below.
 
