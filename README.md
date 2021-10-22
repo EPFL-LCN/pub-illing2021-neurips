@@ -1,5 +1,6 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5593214.svg)](https://doi.org/10.5281/zenodo.5593214)
+<!-- Should be updated with new release! Please check -->
 
 This is the code for the publication:
 
@@ -81,7 +82,8 @@ The basic simulations described in the paper can be replicated using the command
 # Audio
 
 The implementation of the CLAPP audio experiments is based on Sindy Löwe's code of the [Greedy InfoMax model](https://github.com/loeweX/Greedy_InfoMax).
-<!-- GUILLAUME: Your instructions go here -->
+
+<!-- GUILLAUME: Your instructions go here. Please publish release after updating; this should trigger zenodo to update the link of the DOI -->
 
 ## Setup
 
