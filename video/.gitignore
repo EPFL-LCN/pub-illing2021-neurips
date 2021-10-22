@@ -1,0 +1,6 @@
+__pycache__/
+*.tar
+*.rar
+UCF101/videos/
+UCF101/frame/
+.DS_Store

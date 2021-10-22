@@ -1,0 +1,27 @@
+
+Commands self-supervised training:
+
+python run.py --seq_len 8 --mode HingeCPC --batch_size 16 --epochs 300 --gpu 0 --name std_VGG_HingeCPC
+python run.py --seq_len 8 --mode CLAPP --batch_size 16 --epochs 300 --gpu 1 --name std_VGG_CLAPP
+python run.py --seq_len 8 --mode GIM --batch_size 16 --epochs 300 --gpu 1 --name std_VGG_GIM
+python run.py --seq_len 8 --mode CPC --batch_size 16 --epochs 300 --gpu 0 --name std_VGG_CPC
+
+python run.py --seq_len 54 --mode HingeCPC --temp_VGG --batch_size 8 --epochs 300 --gpu 0 --name temp_VGG_HingeCPC
+python run.py --seq_len 54 --mode CLAPP --temp_VGG --batch_size 8 --epochs 300 --gpu 0 --name temp_VGG_CLAPP
+python run.py --seq_len 54 --mode GIM --temp_VGG --batch_size 8 --epochs 300 --gpu 1 --name temp_VGG_GIM
+python run.py --seq_len 54 --mode CPC --temp_VGG --batch_size 8 --epochs 300 --gpu 1 --name temp_VGG_CPC
+
+
+Commands classification with frozen encoder:
+
+python test.py --seq_len 8 --mode HingeCPC --batch_size 16 --epochs 200 --gpu 0 --lr 1e-4 --name std_VGG_HingeCPC --monitor_all_layers
+python test.py --seq_len 8 --mode CLAPP --batch_size 16 --epochs 200 --gpu 1 --lr 1e-4 --name std_VGG_CLAPP --monitor_all_layers
+python test.py --seq_len 8 --mode GIM --batch_size 16 --epochs 200 --gpu 1 --lr 1e-4 --name std_VGG_GIM --monitor_all_layers
+python test.py --seq_len 8 --mode CPC --batch_size 16 --epochs 200 --gpu 0 --lr 1e-4 --name std_VGG_CPC --monitor_all_layers
+python test.py --seq_len 8 --mode CPC --batch_size 16 --epochs 200 --gpu 0 --lr 1e-4 --name std_VGG_random --monitor_all_layers
+
+python test.py --seq_len 72 --mode HingeCPC --temp_VGG --batch_size 8 --epochs 200 --gpu 1 --lr 1e-4 --name temp_VGG_HingeCPC --monitor_all_layers
+python test.py --seq_len 72 --mode CLAPP --temp_VGG --batch_size 8 --epochs 200 --gpu 1 --lr 1e-4 --name temp_VGG_CLAPP --monitor_all_layers
+python test.py --seq_len 72 --mode GIM --temp_VGG --batch_size 8 --epochs 200 --gpu 1 --lr 1e-4 --name temp_VGG_GIM --monitor_all_layers
+python test.py --seq_len 72 --mode CPC --temp_VGG --batch_size 8 --epochs 200 --gpu 0 --lr 1e-4 --name temp_VGG_CPC --monitor_all_layers
+python test.py --seq_len 72 --mode CPC --temp_VGG --batch_size 8 --epochs 200 --gpu 0 --lr 1e-4 --name temp_VGG_random --monitor_all_layers

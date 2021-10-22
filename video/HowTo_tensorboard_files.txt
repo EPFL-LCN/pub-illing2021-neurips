@@ -1,0 +1,13 @@
+$ ipython
+
+>> from tensorboard.backend.event_processing import event_accumulator
+>> ea = event_accumulator.EventAccumulator('path+/events.out.tfevents.xx.xx')
+(e.g. ea = event_accumulator.EventAccumulator('./temp_VGG_CLAPP_test/classification_all_layers/val/events.out.tfevents.1614370774.illing-clapp-video') )
+>> ea.Reload()
+>> ea.Tags()
+
+-> ready to access
+
+e.g.
+>> ea.Scalars('global/accuracy_4_top_1')[-10:]   
+
