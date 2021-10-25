@@ -12,7 +12,7 @@ Contact:
 
 # Structure of the code
 
-The code is divided into three independent sections, corresponding to the three applications we apply CLAPP to:
+The code is divided into three independent sections, corresponding to the three domains we apply CLAPP to:
 
 * vision
 * video
@@ -43,7 +43,7 @@ respectively. The environment name `infomax`, as well as the name of our python 
 
 ## Usage
 
-We included three sample scripts to run CLAPP, CLAPP-s (synchronous pos. and neg. updates; version with weight symmetry in $W^{pred}$) and Hinge Loss CPC (end-to-end version of CLAPP). To run the, e.g. the Hinge Loss CPC simulations (model training + evaluation), run:
+We included three sample scripts to run CLAPP, CLAPP-s (synchronous pos. and neg. updates; version with symmetric pre- and retrodiction weights) and Hinge Loss CPC (end-to-end version of CLAPP). To run the, e.g. the Hinge Loss CPC simulations (model training + evaluation), run:
 
 ```bash
     bash ./vision/scripts/vision_traineval_HingeLossCPC.sh
@@ -56,7 +56,7 @@ The code includes many (experimental) versions of CLAPP as command line options 
     python -m GreedyInfoMax.vision.main_vision --help
 ```
 
-Training in general uses auto-differentiation provided by `pytorch`. We checked that the obtained updates are equivalent to evaluating the CLAPP learning rules for $W$ and $W^{pred}$, Equations (6) - (8). The used code for this sanity check can be found in `./vision/GreedyInfoMax/vision/compare_updates.py`.
+Training in general uses auto-differentiation provided by `pytorch`. We checked that the obtained updates are equivalent to evaluating the CLAPP learning rules Equations (6) - (8). The used code for this sanity check can be found in `./vision/GreedyInfoMax/vision/compare_updates.py`.
 
 
 # Video
