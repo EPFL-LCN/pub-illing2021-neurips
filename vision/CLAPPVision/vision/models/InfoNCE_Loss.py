@@ -347,7 +347,10 @@ class HingeLoss(_WeightedLoss):
                         l += torch.masked_select(loss, torch.tensor(ind.tolist()).to(cur_device)).mean()
             return l
 
-        cur_device = input.get_device()
+        if self.opt.device.type != "cpu":
+            cur_device = z.get_device()
+        else:
+            cur_device = self.opt.device
 
         scores_pos = input[:,0,:,:,:] # b, n, y, x
         scores_neg = input[:,1,:,:,:] # b, n, y, x
