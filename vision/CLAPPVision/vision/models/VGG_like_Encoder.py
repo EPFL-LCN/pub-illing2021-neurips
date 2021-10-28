@@ -6,8 +6,8 @@ import torch
 import numpy as np
 import os
 
-from GreedyInfoMax.vision.models import InfoNCE_Loss, Supervised_Loss
-from GreedyInfoMax.utils import model_utils
+from CLAPPVision.vision.models import InfoNCE_Loss, Supervised_Loss
+from CLAPPVision.utils import model_utils
 
 class VGG_like_Encoder(nn.Module):
     def __init__(
@@ -108,7 +108,7 @@ class VGG_like_Encoder(nn.Module):
                 out_channels *= reduced_patch_pool_sizes[block_idx] ** 2
 
 
-        # Loss module; is always present, but only gets used when training GreedyInfoMax modules
+        # Loss module; is always present, but only gets used when training CLAPPVision modules
         # in_channels_loss: z, out_channels: c
         if self.opt.loss == 0:
             self.loss = InfoNCE_Loss.InfoNCE_Loss(

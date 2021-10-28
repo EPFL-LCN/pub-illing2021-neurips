@@ -1,6 +1,6 @@
 
 # Call as downstream classification, e.g.
-# python -m GreedyInfoMax.vision.visualise --model_path ./logs/your_simulation --model_num 299 --encoder_type 'vgg_like' --model_splits 6 --train_module 6 --module_num 6 --batch_size 100
+# python -m CLAPPVision.vision.visualise --model_path ./logs/your_simulation --model_num 299 --encoder_type 'vgg_like' --model_splits 6 --train_module 6 --module_num 6 --batch_size 100
 
 ################################################################################
 
@@ -16,10 +16,10 @@ import matplotlib.pyplot as plt
 import torchvision.transforms as transforms
 
 ## own modules
-from GreedyInfoMax.vision.data import get_dataloader
-from GreedyInfoMax.vision.arg_parser import arg_parser
-from GreedyInfoMax.vision.models import load_vision_model
-from GreedyInfoMax.utils import logger, utils
+from CLAPPVision.vision.data import get_dataloader
+from CLAPPVision.vision.arg_parser import arg_parser
+from CLAPPVision.vision.models import load_vision_model
+from CLAPPVision.utils import logger, utils
 
 
 def load_model_and_data(opt):

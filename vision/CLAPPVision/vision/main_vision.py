@@ -2,10 +2,10 @@ import torch
 import time
 import numpy as np
 
-from GreedyInfoMax.utils import logger
-from GreedyInfoMax.vision.arg_parser import arg_parser
-from GreedyInfoMax.vision.models import load_vision_model
-from GreedyInfoMax.vision.data import get_dataloader
+from CLAPPVision.utils import logger
+from CLAPPVision.vision.arg_parser import arg_parser
+from CLAPPVision.vision.models import load_vision_model
+from CLAPPVision.vision.data import get_dataloader
 
 
 def train(opt, model, train_loader, optimizer):

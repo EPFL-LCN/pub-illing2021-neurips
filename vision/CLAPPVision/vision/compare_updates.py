@@ -3,12 +3,12 @@
 # 1) using the same (single) negative everywhere (local sampling): --sample_negs_locally --sample_negs_locally_same_everywhere
 # 2) not using W_retro for the moment (i.e. NOT --asymmetric_W_pred)
 
-# Respective simulations need to be run/created (running 'GreedyInfoMax.vision.main_vision' with the same command line options.
+# Respective simulations need to be run/created (running 'CLAPPVision.vision.main_vision' with the same command line options.
 # However the below tests should hold at any point of training, e.g. also at the first epoch of training
 
 # Bash command for tested cases:
-# python -m GreedyInfoMax.vision.compare_updates --download_dataset --save_dir CLAPP_1 --encoder_type 'vgg_like' --model_splits 6 --train_module 6 --contrast_mode 'hinge' --num_epochs 600 --negative_samples 1 --sample_negs_locally --sample_negs_locally_same_everywhere --start_epoch 598 --model_path ./logs/CLAPP_s/ --save_vars_for_update_calc 3 --batch_size 4
-# python -m GreedyInfoMax.vision.compare_updates --download_dataset --save_dir CLAPP_2 --encoder_type 'vgg_like' --model_splits 6 --train_module 6 --contrast_mode 'hinge' --num_epochs 600 --negative_samples 1 --sample_negs_locally --sample_negs_locally_same_everywhere --either_pos_or_neg_update --start_epoch 599 --model_path ./logs/CLAPP/ --save_vars_for_update_calc 3 --batch_size 4
+# python -m CLAPPVision.vision.compare_updates --download_dataset --save_dir CLAPP_1 --encoder_type 'vgg_like' --model_splits 6 --train_module 6 --contrast_mode 'hinge' --num_epochs 600 --negative_samples 1 --sample_negs_locally --sample_negs_locally_same_everywhere --start_epoch 598 --model_path ./logs/CLAPP_s/ --save_vars_for_update_calc 3 --batch_size 4
+# python -m CLAPPVision.vision.compare_updates --download_dataset --save_dir CLAPP_2 --encoder_type 'vgg_like' --model_splits 6 --train_module 6 --contrast_mode 'hinge' --num_epochs 600 --negative_samples 1 --sample_negs_locally --sample_negs_locally_same_everywhere --either_pos_or_neg_update --start_epoch 599 --model_path ./logs/CLAPP/ --save_vars_for_update_calc 3 --batch_size 4
 
 ################################################################################
 
@@ -27,10 +27,10 @@ import matplotlib.pyplot as plt
 import copy
 
 ## own modules
-from GreedyInfoMax.vision.data import get_dataloader
-from GreedyInfoMax.vision.arg_parser import arg_parser
-from GreedyInfoMax.vision.models import load_vision_model
-from GreedyInfoMax.utils import logger, utils
+from CLAPPVision.vision.data import get_dataloader
+from CLAPPVision.vision.arg_parser import arg_parser
+from CLAPPVision.vision.models import load_vision_model
+from CLAPPVision.utils import logger, utils
 
 
 def train_iter(opt, model, train_loader):

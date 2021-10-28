@@ -2,6 +2,8 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5593214.svg)](https://doi.org/10.5281/zenodo.5593214)
 <!-- Should be updated with new release! Please check -->
 
+# CLAPP code
+
 This is the code for the publication:
 
 B. Illing, J. Ventura, G. Bellec & W. Gerstner
@@ -9,6 +11,36 @@ B. Illing, J. Ventura, G. Bellec & W. Gerstner
 
 Contact:
 [bernd.illing@epfl.ch](mailto:bernd.illing@epfl.ch)
+
+# Implementation of CLAPP in pytorch
+
+We implement CLAPP (and its variants) using the auto-differentiation provided by [`pytorch`](https://pytorch.org). That means that we do not implement the learning rule, Equations (6) - (8), explicitely. Instead, we apply the CLAPP loss, Equation (3), at every layer and block gradients (pytorch `.detach()`), such that the automatically calculated gradients (`.backward()`) match the CLAPP learning rules. We summarize for a single layer in `python/pytorch` pseudocode:
+
+```python
+""" 
+require:
+layer (encoder layer to train)
+clapp_hinge_loss (CLAPP hinge loss as in Equation (3); contains the prediction weights)
+opt (optimiser, e.g. ADAM, containing all trainable parameters of this layer)
+x_past (previous input)
+x (current input)
+"""
+
+c = layer(x_past.detach()) # context: encoding of previous input
+z = layer(x.detach()) # future activity
+
+loss = clapp_hinge_loss(c, z)
+loss.backward() # autodiff calculates gradients
+
+opt.step() # update parameters of layer and prediction weights
+```
+
+We verified numerically that the obtained updates are equivalent to evaluating the CLAPP learning rules Equations (6) - (8). The code for this can be found at `./vision/CLAPPVision/vision/compare_updates.py`.
+
+Note that for Hinge Loss CPC, the end-to-end version of CLAPP, we only use a single CLAPP loss at the final layer. Furthermore, we don't use the `.detach()` function to allow gradient flow through the whole network. 
+
+Variants of CLAPP mainly differ in the exact implementation of the CLAPP loss `clapp_hinge_loss`. E.g. for the synchronous version CLAPP-s, the CLAPP loss adds the contribution of negative and positive sample at every step, instead of sampling with 50/50 probability as in CLAPP.
+
 
 # Structure of the code
 
@@ -35,11 +67,11 @@ To setup the conda environment, simply run
 To activate and deactive the created conda environment, run
 
 ```bash
-    conda activate infomax
+    conda activate clappvision
     conda deactivate
 ```
 
-respectively. The environment name `infomax`, as well as the name of our python module `GreedyInfoMax`, are GIM code legacy. 
+respectively. 
 
 ## Usage
 
@@ -53,10 +85,8 @@ The code includes many (experimental) versions of CLAPP as command line options 
 
 ```bash
     cd vision
-    python -m GreedyInfoMax.vision.main_vision --help
+    python -m CLAPPVision.vision.main_vision --help
 ```
-
-Training in general uses auto-differentiation provided by `pytorch`. We checked that the obtained updates are equivalent to evaluating the CLAPP learning rules Equations (6) - (8). The used code for this sanity check can be found in `./vision/GreedyInfoMax/vision/compare_updates.py`.
 
 
 # Video

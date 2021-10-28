@@ -1,4 +1,4 @@
-name: infomax
+name: clappvision
 channels:
   - pytorch
   - conda-forge

@@ -8,7 +8,7 @@ from numpy.random import choice
 from IPython import embed
 import os
 
-from GreedyInfoMax.utils import model_utils
+from CLAPPVision.utils import model_utils
 
 
 class InfoNCE_Loss(nn.Module):

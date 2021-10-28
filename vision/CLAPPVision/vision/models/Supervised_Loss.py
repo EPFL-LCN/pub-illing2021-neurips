@@ -1,7 +1,7 @@
 import torch.nn as nn
 import torch
 
-from GreedyInfoMax.utils import utils
+from CLAPPVision.utils import utils
 
 class Supervised_Loss(nn.Module):
     def __init__(self, opt, hidden_dim, calc_accuracy):

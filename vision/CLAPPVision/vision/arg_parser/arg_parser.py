@@ -4,7 +4,7 @@ import os
 import torch
 import numpy as np
 
-from GreedyInfoMax.vision.arg_parser import reload_args, train_args, general_args
+from CLAPPVision.vision.arg_parser import reload_args, train_args, general_args
 
 
 def parse_args():

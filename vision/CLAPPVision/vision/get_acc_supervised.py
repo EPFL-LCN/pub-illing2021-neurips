@@ -3,10 +3,10 @@ import numpy as np
 import time
 import os
 
-from GreedyInfoMax.vision.data import get_dataloader
-from GreedyInfoMax.vision.arg_parser import arg_parser
-from GreedyInfoMax.vision.models import load_vision_model
-from GreedyInfoMax.utils import logger, utils
+from CLAPPVision.vision.data import get_dataloader
+from CLAPPVision.vision.arg_parser import arg_parser
+from CLAPPVision.vision.models import load_vision_model
+from CLAPPVision.utils import logger, utils
 
 
 def get_loss_and_accuracy(opt, model, data_loader):

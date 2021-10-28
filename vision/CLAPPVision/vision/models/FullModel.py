@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-from GreedyInfoMax.vision.models import VGG_like_Encoder
+from CLAPPVision.vision.models import VGG_like_Encoder
 
 class FullVisionModel(torch.nn.Module):
     def __init__(self, opt, calc_loss):

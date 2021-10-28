@@ -31,7 +31,7 @@ def parser_reload_args(parser):
         type="int",
         default=0,
         help="Which type of model to use for training of linear classifier on downstream task:"
-        "0 - pretrained GreedyInfoMax/CPC model"
+        "0 - pretrained CLAPP/GreedyInfoMax/CPC model"
         "1 - randomly initialized model"
         "2 - fully supervised model",
     )
