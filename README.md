@@ -35,7 +35,7 @@ loss.backward() # autodiff calculates gradients
 opt.step() # update parameters of layer and prediction weights
 ```
 
-We verified numerically that the obtained updates are equivalent to evaluating the CLAPP learning rules Equations (6) - (8). The code for this can be found at `./vision/CLAPPVision/vision/compare_updates.py`.
+We verified numerically that the obtained updates are equivalent to evaluating the CLAPP learning rules Equations (6) - (8). The code for this can be found in `./vision/CLAPPVision/vision/compare_updates.py`, see Vision section for more details.
 
 Note that for Hinge Loss CPC, the end-to-end version of CLAPP, we only use a single CLAPP loss at the final layer. Furthermore, we don't use the `.detach()` function to allow gradient flow through the whole network. 
 
@@ -90,6 +90,14 @@ The code includes many (experimental) versions of CLAPP as command line options 
     python -m CLAPPVision.vision.main_vision --help
 ```
 
+We also added code to run the above mentioned numerical check that the updates obtained with auto-differentiation are equivalent to evaluating the CLAPP learning rules. To check this, e.g. for a randomly initialised network at the first epoch of training, run:
+
+```bash
+    mkdir ./logs/CLAPP_init/
+    python -m CLAPPVision.vision.compare_updates --download_dataset --save_dir CLAPP_init --encoder_type 'vgg_like' --model_splits 6 --train_module 6 --contrast_mode 'hinge' --num_epochs 1 --negative_samples 1 --sample_negs_locally --sample_negs_locally_same_everywhere --start_epoch 0 --model_path ./logs/CLAPP_init/ --save_vars_for_update_calc 3 --batch_size 4
+```
+
+The equivalence was found to also hold later during training. For this, the respective simulations first need to be run (see comments in `./vision/CLAPPVision/vision/compare_updates.py`). 
 
 # Video
 
