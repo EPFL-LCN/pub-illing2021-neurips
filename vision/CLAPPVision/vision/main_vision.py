@@ -17,6 +17,8 @@ def train(opt, model, train_loader, optimizer):
     starttime = time.time()
     cur_train_module = opt.train_module
 
+    logs.create_log(model, epoch=-1, optimizer=optimizer)
+
     for epoch in range(opt.start_epoch, opt.num_epochs + opt.start_epoch):
 
         loss_epoch = [0 for i in range(opt.model_splits)]
