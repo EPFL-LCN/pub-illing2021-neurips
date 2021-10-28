@@ -29,7 +29,7 @@ class FullVisionModel(torch.nn.Module):
         else: # 1 - lateral recurrence within layer, 2 - feedback recurrence, 3 - both, lateral and feedback recurrence
             self.recurrence_iters = self.opt.recurrence_iters
 
-        self.model, self.encoder, self.autoregressor = self._create_full_model(opt)
+        self.model, self.encoder = self._create_full_model(opt)
 
         print(self.model)
 
@@ -39,7 +39,7 @@ class FullVisionModel(torch.nn.Module):
         else:
             raise Exception("Invalid encoder option")
 
-        return full_model, encoder, None
+        return full_model, encoder
 
 
     def _create_full_model_vgg(self, opt):
@@ -169,10 +169,7 @@ class FullVisionModel(torch.nn.Module):
         # this function can enable the calculation of the loss for training
         self.calc_loss = calc_loss
         if self.opt.model_splits == 1 and self.opt.loss == 0:
-            if self.employ_autoregressive:
-                self.autoregressor.calc_loss = calc_loss
-            else:
-                self.encoder[-1].calc_loss = calc_loss
+            self.encoder[-1].calc_loss = calc_loss
 
         if self.opt.model_splits == 1 and self.opt.loss == 1:
             self.encoder[-1].calc_loss = calc_loss

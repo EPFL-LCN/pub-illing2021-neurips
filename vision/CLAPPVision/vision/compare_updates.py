@@ -7,8 +7,8 @@
 # However the below tests should hold at any point of training, e.g. also at the first epoch of training
 
 # Bash command for tested cases:
-# python -m CLAPPVision.vision.compare_updates --download_dataset --save_dir CLAPP_1 --encoder_type 'vgg_like' --model_splits 6 --train_module 6 --contrast_mode 'hinge' --num_epochs 600 --negative_samples 1 --sample_negs_locally --sample_negs_locally_same_everywhere --start_epoch 598 --model_path ./logs/CLAPP_s/ --save_vars_for_update_calc 3 --batch_size 4
-# python -m CLAPPVision.vision.compare_updates --download_dataset --save_dir CLAPP_2 --encoder_type 'vgg_like' --model_splits 6 --train_module 6 --contrast_mode 'hinge' --num_epochs 600 --negative_samples 1 --sample_negs_locally --sample_negs_locally_same_everywhere --either_pos_or_neg_update --start_epoch 599 --model_path ./logs/CLAPP/ --save_vars_for_update_calc 3 --batch_size 4
+# python -m CLAPPVision.vision.compare_updates --download_dataset --save_dir CLAPP_1 --encoder_type 'vgg_like' --model_splits 6 --train_module 6 --contrast_mode 'hinge' --num_epochs 600 --negative_samples 1 --sample_negs_locally --sample_negs_locally_same_everywhere --start_epoch 598 --model_path ./logs/CLAPP_1/ --save_vars_for_update_calc 3 --batch_size 4
+# python -m CLAPPVision.vision.compare_updates --download_dataset --save_dir CLAPP_2 --encoder_type 'vgg_like' --model_splits 6 --train_module 6 --contrast_mode 'hinge' --num_epochs 600 --negative_samples 1 --sample_negs_locally --sample_negs_locally_same_everywhere --either_pos_or_neg_update --start_epoch 599 --model_path ./logs/CLAPP_2/ --save_vars_for_update_calc 3 --batch_size 4
 
 ################################################################################
 

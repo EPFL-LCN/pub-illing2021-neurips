@@ -50,7 +50,7 @@ The code is divided into three independent sections, corresponding to the three 
 * video
 * audio
 
-Each section comes with its own dependencies handled by conda environments, as explained in the respective sections below.
+Each section comes with its own dependencies handled by `conda` environments, as explained in the respective sections below.
 
 # Vision
 
@@ -61,7 +61,8 @@ The implementation of the CLAPP vision experiments is based on Sindy Löwe's cod
 To setup the conda environment, simply run
 
 ```bash
-    bash ./vision/setup_dependencies.sh
+    cd vision
+    bash ./setup_dependencies.sh
 ```
 
 To activate and deactive the created conda environment, run
@@ -78,7 +79,8 @@ respectively.
 We included three sample scripts to run CLAPP, CLAPP-s (synchronous pos. and neg. updates; version with symmetric pre- and retrodiction weights) and Hinge Loss CPC (end-to-end version of CLAPP). To run the, e.g. the Hinge Loss CPC simulations (model training + evaluation), run:
 
 ```bash
-    bash ./vision/scripts/vision_traineval_HingeLossCPC.sh
+    cd vision
+    bash ./scripts/vision_traineval_HingeLossCPC.sh
 ```
 
 The code includes many (experimental) versions of CLAPP as command line options that are not used and mentioned in the paper. To view all command-line options of model training, run:
