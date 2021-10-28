@@ -1,13 +1,20 @@
 # Code to compare numerically the updates stemming from (i) CLAPP learning rules and (ii) CLAPP loss + autodiff in pytorch
-# ATTENTION: This is tested for 
+
+# This is tested for 
 # 1) using the same (single) negative everywhere (local sampling): --sample_negs_locally --sample_negs_locally_same_everywhere
 # 2) not using W_retro for the moment (i.e. NOT --asymmetric_W_pred)
 
-# Respective simulations need to be run/created (running 'CLAPPVision.vision.main_vision' with the same command line options.
-# However the below tests should hold at any point of training, e.g. also at the first epoch of training
+# E.g. the below tests hold for a randomly initialised network at the first epoch of training:
+# mkdir ./logs/CLAPP_init/
+# python -m CLAPPVision.vision.compare_updates --download_dataset --save_dir CLAPP_init --encoder_type 'vgg_like' --model_splits 6 --train_module 6 --contrast_mode 'hinge' --num_epochs 1 --negative_samples 1 --sample_negs_locally --sample_negs_locally_same_everywhere --start_epoch 0 --model_path ./logs/CLAPP_init/ --save_vars_for_update_calc 3 --batch_size 4
 
-# Bash command for tested cases:
-# python -m CLAPPVision.vision.compare_updates --download_dataset --save_dir CLAPP_1 --encoder_type 'vgg_like' --model_splits 6 --train_module 6 --contrast_mode 'hinge' --num_epochs 600 --negative_samples 1 --sample_negs_locally --sample_negs_locally_same_everywhere --start_epoch 598 --model_path ./logs/CLAPP_1/ --save_vars_for_update_calc 3 --batch_size 4
+# Tests also held for later points in training, e.g. after ~600 epochs:
+# To reproduce this, the respective simulations first need to be run/created (running 'CLAPPVision.vision.main_vision') with respective command line options
+# E.g. for CLAPP-s:
+# python -m CLAPPVision.vision.main_vision --download_dataset --save_dir CLAPP_1 --encoder_type 'vgg_like' --model_splits 6 --train_module 6 --contrast_mode 'hinge' --num_epochs 600 --negative_samples 1 --sample_negs_locally --sample_negs_locally_same_everywhere
+# python -m CLAPPVision.vision.compare_updates --download_dataset --save_dir CLAPP_1 --encoder_type 'vgg_like' --model_splits 6 --train_module 6 --contrast_mode 'hinge' --num_epochs 600 --negative_samples 1 --sample_negs_locally --sample_negs_locally_same_everywhere --start_epoch 599 --model_path ./logs/CLAPP_1/ --save_vars_for_update_calc 3 --batch_size 4
+# or for CLAPP:
+# python -m CLAPPVision.vision.main_vision --download_dataset --save_dir CLAPP_2 --encoder_type 'vgg_like' --model_splits 6 --train_module 6 --contrast_mode 'hinge' --num_epochs 600 --negative_samples 1 --sample_negs_locally --sample_negs_locally_same_everywhere --either_pos_or_neg_update
 # python -m CLAPPVision.vision.compare_updates --download_dataset --save_dir CLAPP_2 --encoder_type 'vgg_like' --model_splits 6 --train_module 6 --contrast_mode 'hinge' --num_epochs 600 --negative_samples 1 --sample_negs_locally --sample_negs_locally_same_everywhere --either_pos_or_neg_update --start_epoch 599 --model_path ./logs/CLAPP_2/ --save_vars_for_update_calc 3 --batch_size 4
 
 ################################################################################
@@ -168,9 +175,14 @@ def _get_dW_ff(opt, layer, skip_step=1):
         post_context = torch.sign(out_c).permute(0, 1, 2, 4, 5, 3)
           
         # post * pre
-        dW_ff_k_p_pred = torch.einsum("bpqyxc, bpqyxdst -> bpqyxcdst", post_z_p.to('cuda'), pre_z_p.to('cuda')).mean(dim=(3,4)).to('cpu') # b, n_p_y, n_p_x, b, c_post, c_pre, k_s, k_s  (already av. over x and y positions)
-        dW_ff_k_n_pred = torch.einsum("bpqyxc, bpqyxdst -> bpqyxcdst", post_z_n.to('cuda'), pre_z_n.to('cuda')).mean(dim=(3,4)).to('cpu') 
-        dW_ff_k_retro = torch.einsum("bpqyxc, bpqyxdst -> bpqyxcdst", post_context.to('cuda'), pre_context.to('cuda')).mean(dim=(3,4)).to('cpu')
+        if opt.device.type == "cpu": # slow cpu version if cudo not configured
+            dW_ff_k_p_pred = torch.einsum("bpqyxc, bpqyxdst -> bpqyxcdst", post_z_p, pre_z_p).mean(dim=(3,4)).to('cpu') # b, n_p_y, n_p_x, b, c_post, c_pre, k_s, k_s  (already av. over x and y positions)
+            dW_ff_k_n_pred = torch.einsum("bpqyxc, bpqyxdst -> bpqyxcdst", post_z_n, pre_z_n).mean(dim=(3,4)).to('cpu') 
+            dW_ff_k_retro = torch.einsum("bpqyxc, bpqyxdst -> bpqyxcdst", post_context, pre_context).mean(dim=(3,4)).to('cpu')
+        else:
+            dW_ff_k_p_pred = torch.einsum("bpqyxc, bpqyxdst -> bpqyxcdst", post_z_p.to('cuda'), pre_z_p.to('cuda')).mean(dim=(3,4)).to('cpu') # b, n_p_y, n_p_x, b, c_post, c_pre, k_s, k_s  (already av. over x and y positions)
+            dW_ff_k_n_pred = torch.einsum("bpqyxc, bpqyxdst -> bpqyxcdst", post_z_n.to('cuda'), pre_z_n.to('cuda')).mean(dim=(3,4)).to('cpu') 
+            dW_ff_k_retro = torch.einsum("bpqyxc, bpqyxdst -> bpqyxcdst", post_context.to('cuda'), pre_context.to('cuda')).mean(dim=(3,4)).to('cpu')
 
         # * "dendrite" (using transposed Wpred as Wretro!!)
         # In InfoNCE_Loss.py W_k is implemented with z as input -> W_k = W_retro!
