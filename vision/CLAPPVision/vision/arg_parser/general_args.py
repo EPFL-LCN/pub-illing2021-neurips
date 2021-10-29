@@ -47,7 +47,7 @@ def parse_general_args(parser):
         type="int",
         default=0,
         help="Loss function to use for training:"
-        "0 - InfoNCE loss"
+        "0 - Contrastive loss (CLAPP/CPC)"
         "1 - supervised loss using class labels",
     )
     parser.add_option(

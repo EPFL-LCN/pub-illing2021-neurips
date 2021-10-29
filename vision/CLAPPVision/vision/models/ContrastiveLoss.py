@@ -11,7 +11,7 @@ import os
 from CLAPPVision.utils import model_utils
 
 
-class InfoNCE_Loss(nn.Module):
+class ContrastiveLoss(nn.Module):
     def __init__(self, opt, in_channels, out_channels, prediction_steps, save_vars=False): # in_channels: z, out_channels: c
         super().__init__()
         self.opt = opt
@@ -48,7 +48,7 @@ class InfoNCE_Loss(nn.Module):
         elif self.contrast_mode == 'logistic':
             self.contrast_loss = MyBCEWithLogitsLoss()
         elif self.contrast_mode == 'hinge':
-            self.contrast_loss = HingeLoss()
+            self.contrast_loss = CLAPPHingeLoss()
 
         if self.opt.weight_init:
             self.initialize()
@@ -75,7 +75,7 @@ class InfoNCE_Loss(nn.Module):
         batch_size = z.shape[0]
 
         # If self.either_pos_or_neg_update is True, select whether pos or neg update (or both) is done, independently for every sample in batch 
-        # p = [0.5,0.5,0.] for equal sampling, p = [0.,0.,1.] implements normal HingeCPC
+        # p = [0.5,0.5,0.] for equal sampling, p = [0.,0.,1.] implements normal HingeLossCPC
         if self.either_pos_or_neg_update:
             self.which_update = choice(['pos','neg','both'], size = batch_size, replace=True, p = [0.5,0.5,0.])
         
@@ -291,7 +291,7 @@ class InfoNCE_Loss(nn.Module):
         return ztwk_shuf, rand_index
 
 ##############################################################################################################
-# Contrastive loss functions
+# Functions that implement actual contrasting, CPC (ExpNLLLoss), Logistic (MyBCEWithLogitsLoss) or CLAPP (CLAPPHingeLoss)
 
 class ExpNLLLoss(_WeightedLoss):
     def __init__(self, weight=None, size_average=None, ignore_index=-100,
@@ -319,9 +319,9 @@ class MyBCEWithLogitsLoss(_WeightedLoss):
         loss = self.loss_func(input, target)
         return loss, None, None
 
-class HingeLoss(_WeightedLoss):
+class CLAPPHingeLoss(_WeightedLoss):
     def __init__(self):
-        super(HingeLoss, self).__init__()
+        super(CLAPPHingeLoss, self).__init__()
 
     def forward(self, opt, k, input, target, gating=None, which_update='both', save_vars=False): #  b, 1+1, n, y, x (both)
         # Take care: pos sample appears N times for N neg. examples

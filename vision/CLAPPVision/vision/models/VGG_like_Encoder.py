@@ -6,7 +6,7 @@ import torch
 import numpy as np
 import os
 
-from CLAPPVision.vision.models import InfoNCE_Loss, Supervised_Loss
+from CLAPPVision.vision.models import ContrastiveLoss, Supervised_Loss
 from CLAPPVision.utils import model_utils
 
 class VGG_like_Encoder(nn.Module):
@@ -111,7 +111,7 @@ class VGG_like_Encoder(nn.Module):
         # Loss module; is always present, but only gets used when training CLAPPVision modules
         # in_channels_loss: z, out_channels: c
         if self.opt.loss == 0:
-            self.loss = InfoNCE_Loss.InfoNCE_Loss(
+            self.loss = ContrastiveLoss.ContrastiveLoss(
                 opt,
                 in_channels=in_channels_loss, # z
                 out_channels=out_channels, # c
@@ -119,14 +119,14 @@ class VGG_like_Encoder(nn.Module):
                 save_vars=self.save_vars
             )
             if self.predict_module_num == 'both':
-                self.loss_same_module = InfoNCE_Loss.InfoNCE_Loss(
+                self.loss_same_module = ContrastiveLoss.ContrastiveLoss(
                     opt,
                     in_channels=in_channels_loss,
                     out_channels=in_channels_loss, # on purpose, cause in_channels_loss is layer below
                     prediction_steps=prediction_steps
                 )
             if self.asymmetric_W_pred:
-                self.loss_mirror = InfoNCE_Loss.InfoNCE_Loss(
+                self.loss_mirror = ContrastiveLoss.ContrastiveLoss(
                 opt,
                 in_channels=in_channels_loss,
                 out_channels=out_channels,

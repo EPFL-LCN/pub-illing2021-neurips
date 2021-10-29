@@ -182,7 +182,7 @@ def parse_train_args(parser):
         "--freeze_W_pred",
         action="store_true",
         default=False,
-        help="Boolean whether the k prediction weights W_pred (W_k in InfoNCE_Loss) are frozen (require_grad=False).",
+        help="Boolean whether the k prediction weights W_pred (W_k in ContrastiveLoss) are frozen (require_grad=False).",
     )
     group.add_option(
         "--unfreeze_last_W_pred",

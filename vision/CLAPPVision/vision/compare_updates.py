@@ -185,7 +185,7 @@ def _get_dW_ff(opt, layer, skip_step=1):
             dW_ff_k_retro = torch.einsum("bpqyxc, bpqyxdst -> bpqyxcdst", post_context.to('cuda'), pre_context.to('cuda')).mean(dim=(3,4)).to('cpu')
 
         # * "dendrite" (using transposed Wpred as Wretro!!)
-        # In InfoNCE_Loss.py W_k is implemented with z as input -> W_k = W_retro!
+        # In ContrastiveLoss.py W_k is implemented with z as input -> W_k = W_retro!
         W_retro = copy.deepcopy(model.module.model[0][layer-1].loss.W_k[k-1].to('cpu')) # k - 1 because of zero-indexing!
         W_pred = copy.deepcopy(W_retro)
         W_pred.weight.data = W_retro.weight.permute(1, 0, 2, 3).clone().detach()
