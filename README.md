@@ -134,7 +134,7 @@ The implementation of the CLAPP audio experiments is based on Sindy Löwe's code
 Please cite our paper if you use this code in your own work:
 
 ```
-@inproceedings{illing2020local,
+@inproceedings{illing2021local,
   title={Local plasticity rules can learn deep representations using self-supervised contrastive predictions},
   author={Illing, Bernd and Ventura, Jean and Bellec, Guillaume and Gerstner, Wulfram},
   booktitle = {Advances in Neural Information Processing Systems},
