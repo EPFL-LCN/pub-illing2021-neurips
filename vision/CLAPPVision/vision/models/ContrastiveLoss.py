@@ -348,7 +348,7 @@ class CLAPPHingeLoss(_WeightedLoss):
             return l
 
         if opt.device.type != "cpu":
-            cur_device = z.get_device()
+            cur_device = input.get_device()
         else:
             cur_device = opt.device
 
