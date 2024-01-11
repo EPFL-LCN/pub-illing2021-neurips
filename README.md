@@ -56,6 +56,27 @@ Each section comes with its own dependencies handled by `conda` environments, as
 
 The implementation of the CLAPP vision experiments is based on Sindy Löwe's code of the [Greedy InfoMax model](https://github.com/loeweX/Greedy_InfoMax).
 
+## New Setup:
+
+1. To setup the conda environment, first create a conda environment with python 3.9:
+```bash
+    conda create -n clappvision python=3.9
+```
+
+2. Install PyTorch v2.0.1 and Torchvision v0.15.2 following the guide on the [PyTorch website](https://pytorch.org/get-started/previous-versions/)
+
+3. Install required files by pip:
+```bash
+    cd vision
+    pip3 install -r requirements.txt
+```
+4. To activate and deactive the created conda environment, run
+
+```bash
+    conda activate clappvision
+    conda deactivate
+```
+
 ## Setup
 
 To setup the conda environment, simply run

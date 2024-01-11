@@ -6,15 +6,15 @@ import copy
 
 
 class Logger:
-    def __init__(self, opt):
+    def __init__(self, opt, pretrain=True):
         self.opt = opt
 
         if opt.validate:
-            self.val_loss = [[] for i in range(opt.model_splits)]
+            self.val_loss = [[] for i in range(opt.model_splits)] if pretrain else [[]]
         else:
             self.val_loss = None
 
-        self.train_loss = [[] for i in range(opt.model_splits)]
+        self.train_loss = [[] for i in range(opt.model_splits)] if pretrain else [[]]
 
         if opt.start_epoch > 0:
             self.loss_last_training = np.load(
@@ -34,7 +34,7 @@ class Logger:
             self.loss_last_training = None
 
             if opt.validate:
-                self.val_loss = [[] for i in range(opt.model_splits)]
+                self.val_loss = [[] for i in range(opt.model_splits)] if pretrain else [[]]
             else:
                 self.val_loss = None
 

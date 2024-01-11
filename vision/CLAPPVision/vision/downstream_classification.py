@@ -188,7 +188,7 @@ if __name__ == "__main__":
     optimizer = torch.optim.Adam(params)
     criterion = torch.nn.CrossEntropyLoss()
 
-    logs = logger.Logger(opt)
+    logs = logger.Logger(opt, pretrain=False) #old code: logs = logger.Logger(opt)
 
     try:
         # Train the model
