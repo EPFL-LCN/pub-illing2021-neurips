@@ -120,6 +120,14 @@ We also added code to run the above mentioned numerical check that the updates o
 
 The equivalence was found to also hold later during training. For this, the respective simulations first need to be run (see comments in `./vision/CLAPPVision/vision/compare_updates.py`). 
 
+## Checkpoint
+
+The trained checkpoints of CLAPP-s are stored in `vision/checkpoints/CLAPP_s`. Trained models are stored with name `model_i_k.ckpt` where i is the number of layers and k is the epoch number. Example code of using the last layer for downstream classification is:
+```bash
+    cd vision
+    python -m CLAPPVision.vision.downstream_classification --model_path ./checkpoints/CLAPP_s --model_num 299 --encoder_type 'vgg_like' --model_splits 6 --train_module 6 --module_num 6
+```
+
 # Video
 
 The implementation of the CLAPP video experiments was inspired by Tengda Han's code for [Dense Predictive Coding](https://github.com/TengdaHan/DPC)
